@@ -6,14 +6,11 @@ guide product improvement, marketing strategies, and customer engagement.
 
 ## 2. Dataset Description
 The dataset contains information scraped from Amazon product pages, including:
--
-• Product details: name, category, price, discount, and ratings
--
-•  Customer engagement: user reviews, titles, and content
--
-•  Each row represents a unique product, with aggregated reviewer data
+- Product details: name, category, price, discount, and ratings
+- Customer engagement: user reviews, titles, and content
+- Each row represents a unique product, with aggregated reviewer data
 stored as comma-separated values
--
+
 Total Records: 1,465 rows
 TotalFields: 16 columns
 
