@@ -33,8 +33,16 @@ The goal was to generate a concise and SEO-friendly title that:
 - Is limited to a manageable character length for display.
 
 ## 4.Pivot Tables Report
-1. Average Actual Price vs. Discounted Price by Category
-
-   
-Count of Products with ≥50% Discount
+1. Average discount percentage by product category
+2. Products are listed under each category
+3. Total number of reviews per category
+4. Products with the highest average ratings
+5. Average Actual Price vs. Discounted Price by Category
+6. Products with the highest number of reviews
+7. Products with a discount of 50% or more
 Therefore 56 products are discounted at a percentage of >=50. Allowed me to quickly assess how much of the catalog is under aggressive discounting.
+
+8. Distribution of product ratings
+9. Total potential revenue (actual_price × rating_count) by category
+10. Number of unique products per price range bucket
+11. 
