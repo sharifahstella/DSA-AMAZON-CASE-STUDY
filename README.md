@@ -42,11 +42,13 @@ The goal was to generate a concise and SEO-friendly title that:
   
 
 - 4. Total number of reviews per category
+
 ![image](https://github.com/user-attachments/assets/b6197c62-071b-405b-89ba-1f529b8e1019)
  
 5. Products with the highest average ratings
 6. Average Actual Price vs. Discounted Price by Category
 7. Products with the highest number of reviews
+
 8. Products with a discount of 50% or more
 Therefore 56 products are discounted at a percentage of >=50. Allowed me to quickly assess how much of the catalog is under aggressive discounting.
 
