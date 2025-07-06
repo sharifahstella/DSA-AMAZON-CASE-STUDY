@@ -1,5 +1,4 @@
-# DSA-AMAZON CASE STUDY
-
+# Case Study 1: Amazon Product Review Analysis
 ## 1. Title Description
 This an analysis of product and customer review data to generate insights that can
 guide product improvement, marketing strategies, and customer engagement.
@@ -14,7 +13,7 @@ stored as comma-separated values
 Total Records: 1,465 rows
 TotalFields: 16 columns
 
-## 3.Data Cleaaning
+## 3.Data Cleaning
 This document describes the process used to clean and enrich a product dataset for improved clarity and search optimization. The main objectives were:
 - To ensure data consistency and completeness
 - To extract and standardize product categorization
@@ -107,4 +106,308 @@ These products combine high credibility (ratings above 4.6) with strong volume (
 HDMICables dominate the top spots.
 These are your flagship products, likely driving a significant share of revenue and customer trust.
 
-# DSA_Kultra-Mega-Stores-Inventory
+# Case Study 2: Kultra Mega Stores Inventory
+## Company Overview
+Kultra Mega Stores (KMS), headquartered in Lagos, specializes in office supplies and furniture. Its customer base includes:
+- Individual consumers
+- Small businesses (retail)
+- Large corporate clients (wholesale)
+  
+This project supports the Abuja division by analyzing historical order data (2009–2012) to provide actionable insights.
+
+
+## Dataset
+Source: Excel file with orders from 2009–2012
+Imported Table: KMS Case Study
+Key Fields:
+- Order_ID
+- Order_Date
+- Customer_Name
+- Customer_Segment
+- Region
+- Product_Category
+- Product_Sub_Category
+- Product_Name
+- Quantity
+- Sales
+- Profit
+- Shipping_Cost
+- Ship_Mode
+- Order_Priority
+- Returned
+
+### Case Scenario I — Analysis & SQL Queries
+
+- Which product category had the highest sales?
+
+```
+SELECT TOP 1
+    Product_Category,
+    SUM(Sales) AS TotalSales
+FROM 
+    [dbo].[KMS Sql Case Study]
+GROUP BY 
+    Product_Category
+ORDER BY 
+    TotalSales DESC;
+
+```
+Technology having the highest sales 
+
+ ![Line graph](https://github.com/sharifahstella/DSA_Kultra-Mega-Stores-Inventory/blob/main/cate.PNG) 
+
+- Top 3 and Bottom 3 regions in terms of sales
+
+```
+SELECT TOP 3
+    Region,
+    SUM(Sales) AS TotalSales
+FROM 
+    [dbo].[KMS Sql Case Study]
+GROUP BY 
+    Region
+ORDER BY 
+    TotalSales DESC;
+
+```
+![Line graph](https://github.com/sharifahstella/DSA_Kultra-Mega-Stores-Inventory/blob/main/top3.PNG) 
+
+Therefore West ,Ontario and Parie top 3 regions respectively in sales leading to the most seen regions profitably
+```
+SELECT TOP 3
+    Region,
+    SUM(Sales) AS TotalSales
+FROM 
+    [dbo].[KMS Sql Case Study]
+GROUP BY 
+    Region
+ORDER BY 
+    TotalSales ASC;
+
+```
+![Line graph](https://github.com/sharifahstella/DSA_Kultra-Mega-Stores-Inventory/blob/main/bottom3.PNG) 
+
+ The bottom 3 regions that include Nunavit,Northwest Territories and Yukon have the least sales that need to drive attention to improve on the sales in the regions.
+
+- Total sales of appliances in Ontario
+
+```
+SELECT
+    SUM(Sales) AS TotalSalesOfAppliances
+FROM 
+    [dbo].[KMS Sql Case Study]
+WHERE 
+    Product_Sub_Category = 'Appliances'
+    AND Region = 'Ontario';
+
+```
+![image](https://github.com/user-attachments/assets/bab5b458-00cd-4368-899f-85492e2a2611)
+
+
+Therefore there was no total sales of appliances in Ontario which also calls for the most seen region that has to increase on the sales in the region of ontario.
+
+- Recommendations to increase revenue from the bottom 10 customers
+
+```
+SELECT TOP 10
+    Customer_Segment,
+    Customer_Name,
+    SUM(Sales) AS TotalSales
+FROM 
+    [dbo].[KMS Sql Case Study]
+GROUP BY 
+    Customer_Segment,
+    Customer_Name
+ORDER BY 
+    TotalSales ASC;
+
+```
+![Line graph](https://github.com/sharifahstella/DSA_Kultra-Mega-Stores-Inventory/blob/main/cate2.PNG)  
+
+Recommendations:
+- 1. Personalized Engagement: Assign account managers to follow up and understand why spend is low.
+- 2. Targeted Promotions: Offer exclusive discounts or loyalty rewards.
+- 3. Cross-Selling: Recommend related products based on prior purchases.
+- 4. Feedback Collection: Survey customers to learn about unmet needs.
+- 5. Streamlined Ordering: Simplify reorder processes.
+ 
+- Shipping method with the highest shipping cost
+
+```
+SELECT TOP 1
+    Ship_Mode,
+    SUM(Shipping_Cost) AS TotalShippingCost
+FROM 
+    [dbo].[KMS Sql Case Study]
+GROUP BY 
+    Ship_Mode
+ORDER BY 
+    TotalShippingCost DESC;
+
+```
+![image](https://github.com/user-attachments/assets/45c349c4-9493-45b8-96f9-1ef3c2c4f847)
+
+
+Therefore Delivery Truck has the highest shipping cost
+
+###Summary of Insights
+- Categories and regions driving most revenue are critical for growth.
+- Low-performing regions and customers offer opportunities for targeted initiatives.
+- Shipping methods should be reviewed for cost efficiency.
+
+### Case Scenario II — Analysis & SQL Queries
+
+- most valuable customers, and what products or services do they typically purchase
+
+```
+SELECT TOP 5
+    Customer_Segment,
+    Customer_Name,
+    SUM(Sales) AS TotalSales
+FROM 
+    [dbo].[KMS Sql Case Study]
+GROUP BY 
+    Customer_Segment, Customer_Name
+ORDER BY 
+    TotalSales DESC;
+
+
+SELECT 
+    Customer_Segment,
+    Customer_Name,
+    Product_Category,
+    SUM(Sales) AS CategorySales
+FROM 
+    [dbo].[KMS Sql Case Study]
+WHERE 
+    Customer_Segment IN (
+        SELECT TOP 5 Customer_Segment
+        FROM [dbo].[KMS Sql Case Study]
+        GROUP BY Customer_Segment
+        ORDER BY SUM(Sales) DESC
+        
+    )
+GROUP BY 
+    Customer_Segment, Customer_Name, Product_Category
+ORDER BY 
+    Customer_Segment, CategorySales DESC;
+
+```
+
+![image](https://github.com/user-attachments/assets/965f0c41-e690-458b-8257-8115a927e7ef)
+
+![image](https://github.com/user-attachments/assets/74432272-b004-422c-8be8-7ca9dd81b092)
+
+- small business customer with the highest sales
+
+```
+SELECT TOP 1 
+    Customer_Segment,
+    Customer_Name,
+    SUM(Sales) AS TotalSales
+FROM 
+    [dbo].[KMS Sql Case Study]
+WHERE 
+    Customer_Segment = 'Small Business'
+GROUP BY 
+    Customer_Segment, Customer_Name
+ORDER BY 
+    TotalSales DESC;
+
+```
+![image](https://github.com/user-attachments/assets/76412398-e9ab-4056-8d45-a769827f3068)
+
+The small bussiness customer is Dennis Kane to secure repeat business.
+
+- Corporate Customer That placed the most number of orders in 2009 – 2012
+
+```
+SELECT TOP 1
+    Customer_Segment,
+    Customer_Name,
+    SUM(Order_ID) AS OrderCount
+FROM 
+    [dbo].[KMS Sql Case Study]
+WHERE 
+    Customer_Segment = 'Corporate'
+    AND Order_Date BETWEEN '2009-01-01' AND '2012-12-31'
+GROUP BY 
+    Customer_Segment, Customer_Name
+ORDER BY 
+    OrderCount DESC;
+
+```
+![image](https://github.com/user-attachments/assets/ac9a7e1d-5f36-4b57-8610-52658d6e085a)
+
+
+Bill Eplette was the corprate customer that placed a number of orders therefore may be a priority for volume-based incentives or preferred service agreements.
+
+- consumer customer that was the most profitable one
+
+```
+SELECT TOP 1 
+    Customer_Segment,
+    Customer_Name,
+    SUM(Profit) AS TotalProfit
+FROM 
+    [dbo].[KMS Sql Case Study]
+WHERE 
+    Customer_Segment = 'Consumer'
+GROUP BY 
+    Customer_Segment, Customer_Name
+ORDER BY 
+    TotalProfit DESC;
+
+```
+![image](https://github.com/user-attachments/assets/fbaa1608-7beb-4bc4-afcf-2001909baeef)
+
+
+Emily Phan was the most profitable customer that insight support strategies to grow profits in the Consumer segment.
+
+- Which customer returned items, and what segment do they belong to?
+
+```
+SELECT DISTINCT
+    o.[Customer_Name],
+    o.[Customer_Segment]
+FROM
+      [dbo].[KMS Sql Case Study] o
+INNER JOIN
+    Order_Status s ON o.[Order_ID] = s.[Order_ID]
+WHERE
+    s.[Status] = 'Returned'
+ORDER BY
+    o.[Customer_Segment], o.[Customer_Name];
+
+```
+![image](https://github.com/user-attachments/assets/bf0176ef-abe9-443a-959f-78a87667b6a8)
+
+- Did the company appropriately spend shipping costs based on Order Priority?
+
+I analyzed shipping behavior by priority and shipping mode.
+
+```
+SELECT
+    o.[Order_Priority],
+    o.[Ship_Mode],
+    SUM(o.[Order_ID]) AS OrderCount,
+    SUM(o.[Shipping_Cost]) AS TotalShippingCost
+FROM
+    [dbo].[KMS Sql Case Study] o
+GROUP BY
+    o.[Order_Priority], o.[Ship_Mode]
+ORDER BY
+    o.[Order_Priority], o.[Ship_Mode];
+```
+
+![image](https://github.com/user-attachments/assets/51a2302d-fd6d-4aa6-9e02-4f316fe4f7ee)
+
+
+### Summary of Recommendations
+If you observe that Low or Medium priority orders often use Express Air, this indicates unnecessary shipping cost.
+KMS should implement a shipping policy:
+- Use Express Air only for Critical/High priority orders
+- Use Delivery Truck for Medium/Low orders to reduce costs
+- Regularly review shipping behavior to align with order urgency
+
+
