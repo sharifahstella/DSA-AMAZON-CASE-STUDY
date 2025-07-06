@@ -107,4 +107,4 @@ These products combine high credibility (ratings above 4.6) with strong volume (
 HDMICables dominate the top spots.
 These are your flagship products, likely driving a significant share of revenue and customer trust.
 
-# DSA-AMAZON CASE STUDY
+# DSA_Kultra-Mega-Stores-Inventory
